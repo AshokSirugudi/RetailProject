@@ -1,7 +1,7 @@
 pipeline {
     agent any
     environment {
-        LABS = credentials('labcreds')
+        LABS = credentials('labcreds')  // Fetches credentials securely
         JAVA_HOME = '/opt/bitnami/java'  // Set your JAVA_HOME path here.
         PATH = "${env.JAVA_HOME}/bin:${env.PATH}"  // Add Java binaries to PATH
     }
@@ -9,12 +9,8 @@ pipeline {
         stage('Setup Virtual Environment') {
             steps {
                 script {
-                    // Install the python3-venv package (if not already installed)
-                    sh 'sudo apt-get update && sudo apt-get install -y python3.11-venv'
-
                     // Create a virtual environment with the project name (Retail pipeline)
                     sh 'python3 -m venv retail_pipeline_venv'
-
                     // Upgrade pip and install pipenv in the virtual environment
                     sh './retail_pipeline_venv/bin/pip install --upgrade pip'
                     sh './retail_pipeline_venv/bin/pip install pipenv'
@@ -48,7 +44,7 @@ pipeline {
         }
         stage('Deploy') {
             steps {
-                // Add deployment steps here (e.g., deploy to a server or cloud)
+                // Deployment steps with updated username 'itv015380'
                 sh '''sshpass -p $LABS_PSW scp -o StrictHostKeyChecking=no -r \
                     retailproject.zip $LABS_USR@g02.itversity.com:/home/itv015380/retailproject'''
             }
