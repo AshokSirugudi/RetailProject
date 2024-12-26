@@ -46,7 +46,7 @@ pipeline {
             steps {
                 // Deployment steps with updated username 'itv015380'
                 sh '''sshpass -p $LABS_PSW scp -o StrictHostKeyChecking=no -r \
-                    retailproject.zip $LABS_USR@g02.itversity.com:/home/itv015380/retailproject'''
+                    retailproject.zip $LABS_USR@g02.itversity.com:/user/itv015380/retailproject'''
             }
         }
     }
